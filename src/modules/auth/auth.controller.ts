@@ -22,4 +22,12 @@ export class AuthController {
   ) {
     return this.authService.register(email, password);
   }
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) res: Response) {
+    return this.authService.logout(res);
+  }
+  @Post('verify-token')
+  async verify(@Body('token') token: string) {
+    return this.authService.verify(token);
+  }
 }

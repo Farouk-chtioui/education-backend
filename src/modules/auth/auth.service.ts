@@ -45,4 +45,16 @@ export class AuthService {
     await newUser.save();
     return { message: 'User created' };
   }
+  async logout(res: Response) {
+    res.clearCookie('jwt');
+    return { message: 'Logout successful' };
+  }
+  async verify(token: string) {
+    try {
+      const payload = this.jwtService.verify(token);
+      return { message: 'Token is valid', payload };
+    } catch (error) {
+      throw new UnauthorizedException({ message: 'Invalid token' });
+    }
+  }
 }
